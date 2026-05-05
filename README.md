@@ -1,6 +1,6 @@
 # AWS Production Infrastructure — Terraform Modules
 
-> **Senior-level** Infrastructure as Code project implementing production-grade AWS architecture with reusable Terraform modules, multi-environment deployment, remote state management, CI/CD pipeline, and automated policy enforcement.
+Production-grade Infrastructure as Code project implementing Infrastructure as Code project implementing production-grade AWS architecture with reusable Terraform modules, multi-environment deployment, remote state management, CI/CD pipeline, and automated policy enforcement.
 
 [![Terraform CI/CD](https://github.com/Chinzorig11/aws-production-infra/actions/workflows/terraform-ci.yml/badge.svg)](https://github.com/Chinzorig11/aws-production-infra/actions)
 [![tfsec](https://github.com/Chinzorig11/aws-production-infra/actions/workflows/security-scan.yml/badge.svg)](https://github.com/Chinzorig11/aws-production-infra/actions)
@@ -44,9 +44,9 @@
   └─────────────────────────────────────────────────────────────────┘
 ```
 
-## What Makes This Senior-Level?
+## Project Structure
 
-| Feature | Junior Approach | This Project (Senior) |
+| Feature | Junior Approach | Senior Approach |
 |---------|----------------|----------------------|
 | Code Organization | Single flat directory | **Reusable Terraform Modules** |
 | Environments | One environment | **dev / staging / prod** with workspaces |
