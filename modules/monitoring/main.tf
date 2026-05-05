@@ -5,7 +5,7 @@
  */
 
 resource "aws_sns_topic" "alerts" {
-  name = "${var.project_name}-alerts-${var.environment}"
+  name              = "${var.project_name}-alerts-${var.environment}"
   kms_master_key_id = var.kms_key_id != "" ? var.kms_key_id : null
 }
 
@@ -87,7 +87,7 @@ resource "aws_cloudwatch_metric_alarm" "alb_latency" {
   metric_name         = "TargetResponseTime"
   namespace           = "AWS/ApplicationELB"
   period              = 300
-  statistic           = "p95"  # Senior: p95 instead of Average
+  statistic           = "p95" # Senior: p95 instead of Average
   threshold           = var.latency_threshold_seconds
   alarm_actions       = [aws_sns_topic.alerts.arn]
   dimensions          = { LoadBalancer = var.alb_arn_suffix }
@@ -110,13 +110,13 @@ resource "aws_cloudwatch_dashboard" "this" {
   dashboard_body = jsonencode({
     widgets = [
       { type = "metric", x = 0, y = 0, width = 12, height = 6,
-        properties = { title = "EC2 CPU", metrics = [["AWS/EC2", "CPUUtilization", "AutoScalingGroupName", var.asg_name]], period = 300, stat = "Average", region = var.region } },
+      properties = { title = "EC2 CPU", metrics = [["AWS/EC2", "CPUUtilization", "AutoScalingGroupName", var.asg_name]], period = 300, stat = "Average", region = var.region } },
       { type = "metric", x = 12, y = 0, width = 12, height = 6,
-        properties = { title = "ALB Requests", metrics = var.alb_arn_suffix != "" ? [["AWS/ApplicationELB", "RequestCount", "LoadBalancer", var.alb_arn_suffix]] : [], period = 300, stat = "Sum", region = var.region } },
+      properties = { title = "ALB Requests", metrics = var.alb_arn_suffix != "" ? [["AWS/ApplicationELB", "RequestCount", "LoadBalancer", var.alb_arn_suffix]] : [], period = 300, stat = "Sum", region = var.region } },
       { type = "metric", x = 0, y = 6, width = 12, height = 6,
-        properties = { title = "ALB Response Time (p95)", metrics = var.alb_arn_suffix != "" ? [["AWS/ApplicationELB", "TargetResponseTime", "LoadBalancer", var.alb_arn_suffix]] : [], period = 300, stat = "p95", region = var.region } },
+      properties = { title = "ALB Response Time (p95)", metrics = var.alb_arn_suffix != "" ? [["AWS/ApplicationELB", "TargetResponseTime", "LoadBalancer", var.alb_arn_suffix]] : [], period = 300, stat = "p95", region = var.region } },
       { type = "metric", x = 12, y = 6, width = 12, height = 6,
-        properties = { title = "RDS CPU & Connections", metrics = var.rds_instance_id != "" ? [["AWS/RDS", "CPUUtilization", "DBInstanceIdentifier", var.rds_instance_id], ["AWS/RDS", "DatabaseConnections", "DBInstanceIdentifier", var.rds_instance_id]] : [], period = 300, region = var.region } },
+      properties = { title = "RDS CPU & Connections", metrics = var.rds_instance_id != "" ? [["AWS/RDS", "CPUUtilization", "DBInstanceIdentifier", var.rds_instance_id], ["AWS/RDS", "DatabaseConnections", "DBInstanceIdentifier", var.rds_instance_id]] : [], period = 300, region = var.region } },
     ]
   })
 }

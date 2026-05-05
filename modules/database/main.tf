@@ -35,7 +35,7 @@ resource "aws_kms_key" "db" {
   count                   = var.create_kms_key ? 1 : 0
   description             = "KMS key for ${var.project_name} RDS encryption"
   deletion_window_in_days = 7
-  enable_key_rotation     = true  # Senior: automatic key rotation
+  enable_key_rotation     = true # Senior: automatic key rotation
 
   tags = {
     Name = "${var.project_name}-db-kms-${var.environment}"
@@ -127,9 +127,9 @@ resource "aws_db_instance" "this" {
   vpc_security_group_ids = [aws_security_group.rds.id]
   parameter_group_name   = aws_db_parameter_group.this.name
 
-  multi_az            = var.multi_az
-  publicly_accessible = false
-  skip_final_snapshot = var.environment != "prod"
+  multi_az                  = var.multi_az
+  publicly_accessible       = false
+  skip_final_snapshot       = var.environment != "prod"
   final_snapshot_identifier = var.environment == "prod" ? "${var.project_name}-final-${formatdate("YYYY-MM-DD", timestamp())}" : null
 
   backup_retention_period = var.backup_retention_days

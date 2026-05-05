@@ -37,8 +37,8 @@ module "vpc" {
   vpc_cidr             = var.vpc_cidr
   public_subnet_cidrs  = var.public_subnet_cidrs
   private_subnet_cidrs = var.private_subnet_cidrs
-  single_nat_gateway   = true          # Cost savings: 1 NAT instead of 2
-  enable_flow_logs     = false         # Disabled for dev
+  single_nat_gateway   = true  # Cost savings: 1 NAT instead of 2
+  enable_flow_logs     = false # Disabled for dev
 }
 
 # --- Load Balancer ---
@@ -50,7 +50,7 @@ module "alb" {
   vpc_id            = module.vpc.vpc_id
   public_subnet_ids = module.vpc.public_subnet_ids
   app_port          = 3000
-  enable_waf        = false           # No WAF for dev
+  enable_waf        = false # No WAF for dev
 }
 
 # --- Compute ---
@@ -68,7 +68,7 @@ module "compute" {
   alb_security_group_ids = [module.alb.security_group_id]
   target_group_arns      = [module.alb.target_group_arn]
   secrets_arn            = module.database.secret_arn
-  enable_warm_pool       = false       # No warm pool for dev
+  enable_warm_pool       = false # No warm pool for dev
 }
 
 # --- Database ---
@@ -83,8 +83,8 @@ module "database" {
   db_username                = var.db_username
   db_password                = var.db_password
   instance_class             = "db.t3.micro"
-  multi_az                   = false    # Single AZ for dev
-  create_kms_key             = false    # Default encryption for dev
+  multi_az                   = false # Single AZ for dev
+  create_kms_key             = false # Default encryption for dev
   backup_retention_days      = 1
 }
 

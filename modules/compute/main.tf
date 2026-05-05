@@ -63,7 +63,7 @@ resource "aws_launch_template" "this" {
   # Senior: IMDSv2 required (security best practice)
   metadata_options {
     http_endpoint               = "enabled"
-    http_tokens                 = "required"  # Enforce IMDSv2
+    http_tokens                 = "required" # Enforce IMDSv2
     http_put_response_hop_limit = 1
   }
 
@@ -79,7 +79,7 @@ resource "aws_launch_template" "this" {
   }
 
   monitoring {
-    enabled = true  # Detailed monitoring
+    enabled = true # Detailed monitoring
   }
 
   user_data = base64encode(templatefile("${path.module}/user_data.sh.tpl", {
@@ -100,13 +100,13 @@ resource "aws_launch_template" "this" {
 
 # --- Auto Scaling Group ---
 resource "aws_autoscaling_group" "this" {
-  name_prefix         = "${var.project_name}-${var.environment}-"
-  desired_capacity    = var.desired_size
-  min_size            = var.min_size
-  max_size            = var.max_size
-  vpc_zone_identifier = var.public_subnets
-  target_group_arns   = var.target_group_arns
-  health_check_type   = "ELB"
+  name_prefix               = "${var.project_name}-${var.environment}-"
+  desired_capacity          = var.desired_size
+  min_size                  = var.min_size
+  max_size                  = var.max_size
+  vpc_zone_identifier       = var.public_subnets
+  target_group_arns         = var.target_group_arns
+  health_check_type         = "ELB"
   health_check_grace_period = 300
 
   # Senior: Instance refresh for zero-downtime deployments
@@ -140,7 +140,7 @@ resource "aws_autoscaling_group" "this" {
   }
 
   lifecycle {
-    ignore_changes = [desired_capacity]  # Don't override auto-scaling decisions
+    ignore_changes = [desired_capacity] # Don't override auto-scaling decisions
   }
 }
 
